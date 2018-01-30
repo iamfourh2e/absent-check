@@ -110,7 +110,8 @@
           },
           {
             icon: "settings",
-            text: "Settings"
+            text: "Settings",
+            link: '/settings'
           },
           {
             icon: "chat_bubble",
