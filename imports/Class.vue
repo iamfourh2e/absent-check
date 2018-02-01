@@ -95,9 +95,7 @@
                                           <small>*indicates required field</small>
 
                 </v-flex>
-                <v-flex xs12>
-                         <map-component :reRender="dialog" @location=location></map-component>
-                </v-flex>
+
             </v-layout>
           </v-container>
         </v-card-text>
@@ -124,10 +122,8 @@
 
 
 <script>
-    import Map from './Map.vue';
     export default {
         components: {
-            mapComponent: Map
         },
         data() {
             return {

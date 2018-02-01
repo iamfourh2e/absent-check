@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-        <drawer :toggle-drawer="drawer" @toggleDrawerState="toggleDrawerState"></drawer>
+        <drawer :toggle-drawer="drawer" @toggleDrawerState="toggleDrawerState"  ></drawer>
         <v-toolbar color="amber" app absolute clipped-left>
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.width <= 1264"
                                  @click="drawer = !drawer"></v-toolbar-side-icon>
@@ -9,7 +9,15 @@
         <v-content>
             <v-container fluid fill-height class="grey lighten-4">
                 <v-layout>
-                    <router-view></router-view>
+                    {{user}}
+                    <slot v-if="loading">
+                        <v-layout justify-center align-center>
+                            <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="purple"></v-progress-circular>
+                        </v-layout>
+                    </slot>
+                    <slot v-else>
+                        <router-view></router-view>
+                    </slot>
                 </v-layout>
             </v-container>
         </v-content>
@@ -25,13 +33,37 @@
         },
         data() {
             return {
-                drawer: null
+                clipped: this.$vuetify.breakpoint.width <= 1264,
+                loading: true,
+                drawer: null,
             };
         },
-        computed: {
-          user(){
-              return this.$store.state.user;
+        watch: {
+          '$route'(to,from){
+              if(!this.$store.state.auth.user){
+                  this.$router.push('/register')
+              }
           }
+        },
+        computed: {
+            showDrawer(){
+                let user = this.$store.state.auth.user;
+                if(!!user){
+                    this.clipped = this.$vuetify.breakpoint.width <= 1264;
+                }else{
+                    this.clipped = false;
+                    this.drawer = true;
+                }
+              return !!user;
+            },
+            user(){
+               let user = this.$store.state.auth.user;
+               if(!user){
+                   this.$router.push('/register');
+               }else{
+                   this.$router.push('/');
+               }
+            }
         },
         methods: {
             toggleDrawerState(val) {
@@ -44,18 +76,24 @@
         props: {
             source: String
         },
-        created(){
+        mounted(){
             let vm = this;
             this.$subscribe('user', {
                 onReady(){
-                   vm.$store.commit('UPDATE_USER', Meteor.users.findOne({}));
+
                 }
-            })
+            });
+            setTimeout(()=>{
+              this.loading = false;
+            },1200);
         }
     };
 </script>
 
 <style>
+    [v-cloak] {
+        display: none;
+    }
     #keep main .container {
         height: 660px;
     }

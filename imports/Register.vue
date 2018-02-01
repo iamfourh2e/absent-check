@@ -94,12 +94,22 @@
             }
         }),
         watch: {
+            'formData.password'(val){
+                if(!!this.formData.confirmPassword){
+                    this.checkMatchedPassword(val === this.formData.confirmPassword)
+                }
+            },
             'formData.confirmPassword'(val){
-                if(val !== this.formData.password){
+                this.checkMatchedPassword(val === this.formData.password)
+            }
+        },
+        methods: {
+            checkMatchedPassword(matched){
+                if(matched){
                     this.confirmPasswordRule = [
                         (v) => !!v || 'Confirm is required',
-                        (v) => ('Password not match'),
                         (v) => v && v.length <= 20 || "Password must less than 20 characters"
+
                     ]
                 }else{
                     this.confirmPasswordRule = [
@@ -108,9 +118,7 @@
 
                     ]
                 }
-            }
-        },
-        methods: {
+            },
             submit() {
                 if (this.$refs.form.validate()) {
                     // Native form submission is not yet supported

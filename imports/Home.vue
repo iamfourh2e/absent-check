@@ -17,16 +17,7 @@
 <script>
   export default {
     mounted() {
-      var video = this.$el.querySelector('#video');
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        // Not adding `{ audio: true }` since we only want video now
-        navigator.mediaDevices.getUserMedia({
-          video: true
-        }).then(function(stream) {
-          video.src = window.URL.createObjectURL(stream);
-          video.play();
-        });
-      }
+
     },
     data() {
       return {
@@ -35,7 +26,6 @@
     },
     methods: {
       take_photo() {
-        this.photo = this.$refs.webcam.getPhoto();
       }
     }
   };

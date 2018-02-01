@@ -18,17 +18,6 @@ const router = new VueRouter({
     mode: 'history',
     routes
 })
-router.beforeEach((to, from, next) => {
-    debugger
-    // store.dispatch('auth/authenticate').then(response => {
-    //     next()
-    // }).catch(error => {
-    //     if (!error.message.includes('Could not find stored JWT')) {
-    //         console.log('Authentication error', error)
-    //     }
-    //     (to.meta.requiresAuth) ? next('/inicio-sesion') : next()
-    // })
-})
 Meteor.startup(()=>{
     new Vue({
         el: '#app',

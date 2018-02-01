@@ -7,8 +7,8 @@ const authModule = {
     },
     mutations: {
         UPDATE_USER(state,value) {
-            console.log(value)
-            state.user = value;
+            let user = Meteor.users.findOne({});
+            state.user = value || user && user._id ? user : null;
         },
         isUsernameValid(state, value) {
             state.isUsernameValid = value
@@ -35,7 +35,7 @@ const authModule = {
         },
         logout() {
             Meteor.logout(() => {
-                console.log('user logged out')
+                this.commit('UPDATE_USER', null)
             })
         }
     }
