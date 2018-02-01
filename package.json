@@ -9,10 +9,12 @@
     "date-fns": "^1.29.0",
     "google-maps": "^3.2.1",
     "meteor-node-stubs": "^0.3.2",
+    "store": "^2.0.12",
     "vue": "^2.5.13",
     "vue-meteor-tracker": "^1.2.3",
     "vue-router": "^3.0.1",
-    "vuetify": "^0.17.6"
+    "vuetify": "^0.17.6",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {}
 }

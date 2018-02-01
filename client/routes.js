@@ -2,6 +2,7 @@ import Home from '../imports/Home.vue';
 import Register from '../imports/Register.vue';
 import NotFound from '../imports/NotFound.vue';
 import Settings from '../imports/Setting.vue';
+
 export const routes = [
     {
         path: '/',
@@ -19,4 +20,4 @@ export const routes = [
         path: '*',
         component: NotFound
     }
-]
+];

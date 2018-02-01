@@ -9,7 +9,8 @@ GoogleMapsLoader.KEY = 'AIzaSyDOld0lTG5Ku15U-p-kyhohZXmZra2rG1k';
 Vue.prototype.$_GoogleMapsLoader = GoogleMapsLoader;
 //import page layout
 import AppLayout from '../imports/AppLayout.vue';
-
+//import store
+import store from '../imports/vuex/store'
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueMeteorTracker);
@@ -17,10 +18,21 @@ const router = new VueRouter({
     mode: 'history',
     routes
 })
-
+router.beforeEach((to, from, next) => {
+    debugger
+    // store.dispatch('auth/authenticate').then(response => {
+    //     next()
+    // }).catch(error => {
+    //     if (!error.message.includes('Could not find stored JWT')) {
+    //         console.log('Authentication error', error)
+    //     }
+    //     (to.meta.requiresAuth) ? next('/inicio-sesion') : next()
+    // })
+})
 Meteor.startup(()=>{
     new Vue({
         el: '#app',
+        store,
         router,
         render: h => h(AppLayout)
     })

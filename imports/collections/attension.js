@@ -1,12 +1,15 @@
 export const Attension = new Mongo.Collection('attension');
 const Attension_schema = new SimpleSchema({
     stringDate: {
-        type: String
+        type: String,
+        index: true
     },
     date: {
-        type: Date
+        type: Date,
+        index: true
     },
     studentId: {
-        type: String
+        type: String,
+        index: true
     }
 });
