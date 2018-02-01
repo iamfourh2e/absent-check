@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import authModule from '/imports/vuex/auth.js'
-
+import drawerModule from '/imports/vuex/drawer.js'
 const store = new Vuex.Store({
     modules: {
-        auth: authModule
+        auth: authModule,
+        drawer: drawerModule
     },
     state: {
         users: []

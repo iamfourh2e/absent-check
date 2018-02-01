@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer fixed :clipped="clipped" v-model="drawer" class="grey lighten-4" app>
+        <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.width > 1264" v-model="drawer" class="grey lighten-4" app>
             <v-list dense class="grey lighten-4">
                 <template v-for="(item, i) in items">
                     <v-layout
@@ -49,11 +49,9 @@
     export default {
         props: {
             toggleDrawer: null,
-            clipped: {
+            showItems: {
                 type: Boolean,
-                default() {
-                    return this.$vuetify.breakpoint.width > 1264;
-                }
+                default: true
             }
         },
         watch: {
@@ -64,9 +62,19 @@
                 if (!val) {
                     this.$emit("toggleDrawerState", val);
                 }
+            },
+            showItems(val){
+                this.displayItems(val);
             }
         },
         methods: {
+            displayItems(val){
+                 if(!val){
+                    this.items = [];
+                }else{
+                    this.items = this.$store.state.drawer.items
+                }
+            },
             toggleAction(item) {
                 item.link ? this.$router.push({
                     path: item.link
@@ -76,65 +84,7 @@
         data() {
             return {
                 drawer: false,
-                items: [{
-                    icon: "home",
-                    text: "Home",
-                    link: "/"
-                },
-                    {
-                        icon: "lightbulb_outline",
-                        text: "Register",
-                        link: "/register"
-                    },
-                    {
-                        icon: "touch_app",
-                        text: "Reminders"
-                    },
-                    {
-                        divider: true
-                    },
-                    {
-                        heading: "Labels"
-                    },
-                    {
-                        icon: "add",
-                        text: "Create new label"
-                    },
-                    {
-                        divider: true
-                    },
-                    {
-                        icon: "archive",
-                        text: "Archive"
-                    },
-                    {
-                        icon: "delete",
-                        text: "Trash"
-                    },
-                    {
-                        divider: true
-                    },
-                    {
-                        icon: "settings",
-                        text: "Settings",
-                        link: '/settings'
-                    },
-                    {
-                        icon: "chat_bubble",
-                        text: "Trash"
-                    },
-                    {
-                        icon: "help",
-                        text: "Help"
-                    },
-                    {
-                        icon: "phonelink",
-                        text: "App downloads"
-                    },
-                    {
-                        icon: "keyboard",
-                        text: "Keyboard shortcuts"
-                    }
+                items: [
                 ]
             };
         }

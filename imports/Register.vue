@@ -1,5 +1,6 @@
 <template>
     <v-layout justify-center align-center>
+        <v-slide-x-transition>
         <v-flex xs6>
             <v-card>
                 <v-card-title>Register</v-card-title>
@@ -54,6 +55,7 @@
                 </v-card-text>
             </v-card>
         </v-flex>
+        </v-slide-x-transition>
     </v-layout>
 </template>
 <script>

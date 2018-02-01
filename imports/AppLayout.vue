@@ -1,14 +1,18 @@
 <template>
     <v-app id="inspire">
-        <drawer :toggle-drawer="drawer" @toggleDrawerState="toggleDrawerState"  ></drawer>
+        <drawer :toggle-drawer="drawer" @toggleDrawerState="toggleDrawerState"  :showItems="showItems"></drawer>
         <v-toolbar color="amber" app absolute clipped-left>
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.width <= 1264"
                                  @click="drawer = !drawer"></v-toolbar-side-icon>
             <a @click="goHome" style="color: black;"><span class="title">H2E&nbsp;<span class="text">ABSENT CHECK</span></span></a>
         </v-toolbar>
+
         <v-content>
             <v-container fluid fill-height class="grey lighten-4">
+
                 <v-layout>
+<transition name="component-transition" mode="out-in">
+
                     {{user}}
                     <slot v-if="loading">
                         <v-layout justify-center align-center>
@@ -16,11 +20,15 @@
                         </v-layout>
                     </slot>
                     <slot v-else>
-                        <router-view></router-view>
+                         <router-view></router-view>
                     </slot>
+                                            </transition>
+
                 </v-layout>
+
             </v-container>
         </v-content>
+
     </v-app>
 </template>
 
@@ -33,9 +41,9 @@
         },
         data() {
             return {
-                clipped: this.$vuetify.breakpoint.width <= 1264,
                 loading: true,
                 drawer: null,
+                showItems: true
             };
         },
         watch: {
@@ -46,21 +54,14 @@
           }
         },
         computed: {
-            showDrawer(){
-                let user = this.$store.state.auth.user;
-                if(!!user){
-                    this.clipped = this.$vuetify.breakpoint.width <= 1264;
-                }else{
-                    this.clipped = false;
-                    this.drawer = true;
-                }
-              return !!user;
-            },
             user(){
                let user = this.$store.state.auth.user;
                if(!user){
                    this.$router.push('/register');
+                    this.showItems = false;
+
                }else{
+                    this.showItems = true;
                    this.$router.push('/');
                }
             }
@@ -91,6 +92,14 @@
 </script>
 
 <style>
+.component-transition-enter-active,
+.component-transition-leave-active {
+    transition: all .3s cubic-bezier(.25, .8, .25, 1);  /* aka 'swing' */
+}
+.component-transition-enter,
+.component-transition-leave-to {
+    opacity: 0;
+}
     [v-cloak] {
         display: none;
     }
