@@ -8,9 +8,9 @@
                     <div>
                         <v-form v-model="valid" ref="form" lazy-validation>
                             <v-text-field
-                                    label="User Name"
-                                    v-model="formData.name"
-                                    :rules="nameRules"
+                                    label="Username"
+                                    v-model="formData.username"
+                                    :rules="usernameRules"
                                     :counter="10"
                                     required
                             ></v-text-field>
@@ -50,6 +50,8 @@
                                 Register
                             </v-btn>
                             <v-btn @click="clear">clear</v-btn>
+                              <br>
+                                <small> have an account ? <router-link to="/login">Login</router-link></small>
                         </v-form>
                     </div>
                 </v-card-text>
@@ -62,9 +64,9 @@
     export default {
         data: () => ({
             valid: true,
-            nameRules: [
-                (v) => !!v || 'Name is required',
-                (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
+            usernameRules: [
+                (v) => !!v || 'username is required',
+                (v) => v && v.length <= 10 || 'username must be less than 10 characters'
             ],
             passwordVisible: false,
             confirmPasswordVisible: false,
@@ -89,7 +91,7 @@
                 (v) => v && v.length <= 20 || "Password must less than 20 characters"
             ],
             formData: {
-                name: '',
+                username: '',
                 password: '',
                 confirmPassword: '',
                 email: '',
@@ -103,6 +105,12 @@
             },
             'formData.confirmPassword'(val){
                 this.checkMatchedPassword(val === this.formData.password)
+            }
+        },
+        computed: {
+             errorLogin() {
+                let err = this.$store.state.auth.errorLogin;
+                return  '';
             }
         },
         methods: {

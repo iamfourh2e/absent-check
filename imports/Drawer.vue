@@ -1,6 +1,30 @@
 <template>
     <div>
         <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.width > 1264" v-model="drawer" class="grey lighten-4" app>
+            <v-list>
+                <v-list-group v-for="user in users"  v-bind:key="user._id" style="padding: 10px 10px 10px 0px;">
+                    <v-list-tile slot="item">
+                        <v-list-tile-avatar avatar>
+                            <img src="img/linus-torvald.jpeg">
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ user.username || user && user.emails[countIndexLenghth(user.emails)].address }}</v-list-tile-title>
+                            <v-list-tile-sub-title>online</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>keyboard_arrow_down</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                    <v-list-tile @click="handleLogout">
+                        <v-list-tile-content>
+                            <v-list-tile-title>Logout</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>cloud_off</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list-group>
+            </v-list>
             <v-list dense class="grey lighten-4">
                 <template v-for="(item, i) in items">
                     <v-layout
@@ -68,11 +92,19 @@
             }
         },
         methods: {
+            handleLogout(){
+                this.$store.dispatch('logout');
+            },
+            countIndexLenghth(val){
+                return val.length - 1;
+            },
             displayItems(val){
                  if(!val){
                     this.items = [];
+                    this.users = [];
                 }else{
-                    this.items = this.$store.state.drawer.items
+                    this.items = this.$store.state.drawer.items;
+                    this.users = this.$store.state.auth.users;
                 }
             },
             toggleAction(item) {
@@ -84,6 +116,7 @@
         data() {
             return {
                 drawer: false,
+                users: [],
                 items: [
                 ]
             };

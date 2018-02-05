@@ -7,33 +7,13 @@
                     <v-card-text>
                         <div>
                             <v-form v-model="valid" ref="form" lazy-validation>
-                                <v-text-field
-                                        label="User Name"
-                                        v-model="formData.name"
-                                        :rules="nameRules"
-                                        :counter="10"
-                                        required
-                                ></v-text-field>
-                                <v-text-field
-                                        hint="At least 6 characters"
-                                        :append-icon="passwordVisible ? 'visibility' : 'visibility_off'"
-                                        :append-icon-cb="() => (passwordVisible = !passwordVisible)"
-                                        :type="passwordVisible ? 'password' : 'text'"
-                                        label="Password"
-                                        :max="20"
-                                        :counter="20"
-                                        :rules="passwordRule"
-                                        v-model="formData.password"
-                                        required
-                                ></v-text-field>
-
-                                <v-btn dark color="indigo darken-4"
-                                        @click="submit"
-                                        :disabled="!valid"
-                                >
+                                <v-text-field label="Username" v-model="formData.username" :rules="usernameRules" :counter="10" required></v-text-field>
+                                <v-text-field hint="At least 6 characters" :append-icon="passwordVisible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisible = !passwordVisible)" :type="passwordVisible ? 'password' : 'text'" label="Password" :max="20" :counter="20"
+                                    :rules="passwordRule" v-model="formData.password" required></v-text-field>
+                                <span style="color: red;">{{errorLogin}}</span>
+                                <v-btn dark color="indigo darken-4" @click="submit" :disabled="!valid">
                                     Login
                                 </v-btn>
-                                <v-btn @click="clear" >clear</v-btn>
                                 <br>
                                 <small>Don't have an account ? <router-link to="/register">Register</router-link></small>
                             </v-form>
@@ -44,46 +24,66 @@
         </v-slide-x-transition>
     </v-layout>
 </template>
+
 <script>
     export default {
         data: () => ({
             valid: true,
-            nameRules: [
-                (v) => !!v || 'Name is required',
-                (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
+            usernameRules: [
+                (v) => !!v || 'username is required',
+                (v) => v && v.length <= 10 || 'username must be less than 10 characters'
             ],
             passwordVisible: true,
             passwordRule: [
                 (v) => !!v || 'Password is required',
             ],
             formData: {
-                name: '',
+                username: '',
                 password: '',
             }
         }),
         watch: {
-            'formData.password'(val){
-                if(!!this.formData.confirmPassword){
-                    this.checkMatchedPassword(val === this.formData.confirmPassword)
-                }
+            'formData.password' (val) {
+                this.resetErrorLogin();
             },
-            'formData.confirmPassword'(val){
-                this.checkMatchedPassword(val === this.formData.password)
+            'formData.username' (val) {
+                this.resetErrorLogin();
+            }
+        },
+        computed: {
+            errorLogin() {
+                let err = this.$store.state.auth.errorLogin;
+                if(err){
+                    this.passwordRule = [
+                        (v) => !!v || 'Confirm is required',
+                        (v) => v && v.length <= 20 || "Password must less than 20 characters",
+                        (v) => err.error === 400 ? 'Userusername and password not match' : err.reason
+                    ]
+                }else{
+                       this.passwordRule = [
+                        (v) => !!v || 'Confirm is required',
+                        (v) => v && v.length <= 20 || "Password must less than 20 characters"
+                    ]
+                }
+                return  '';
             }
         },
         methods: {
-            checkMatchedPassword(matched){
-                if(matched){
+            resetErrorLogin() {
+                this.$store.commit('IS_ERROR_USER_LOGIN', null);
+            },
+            checkMatchedPassword(matched) {
+                if (matched) {
                     this.confirmPasswordRule = [
                         (v) => !!v || 'Confirm is required',
                         (v) => v && v.length <= 20 || "Password must less than 20 characters"
-
+    
                     ]
-                }else{
+                } else {
                     this.confirmPasswordRule = [
                         (v) => !!v || 'Confirm is required',
                         (v) => v && v.length <= 20 || "Password must less than 20 characters"
-
+    
                     ]
                 }
             },
@@ -91,11 +91,11 @@
                 if (this.$refs.form.validate()) {
                     // Native form submission is not yet supported
                     this.$store.dispatch('submitLoginForm', this.formData)
-                        .then((result)=>{
-                        console.log(result)
-                        }).catch((e)=>{
-                        console.log(e)
-                    })
+                        .then((result) => {
+                            console.log(result)
+                        }).catch((e) => {
+                            console.log(e)
+                        })
                 }
             },
             clear() {

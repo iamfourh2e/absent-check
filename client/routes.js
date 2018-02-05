@@ -10,11 +10,13 @@ export const routes = [
     },
     {
       path: '/login',
-      component: Login
+      component: Login,
+      name: 'login'
     },
     {
         path: '/register',
-        component: Register
+        component: Register,
+        name: 'register'
     },
     {
         path: '/settings',
