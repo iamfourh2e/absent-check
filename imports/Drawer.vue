@@ -15,6 +15,22 @@
                             <v-icon>keyboard_arrow_down</v-icon>
                         </v-list-tile-action>
                     </v-list-tile>
+                    <v-list-tile @click="becomeATeacher" v-if="isNotATeacher">
+                        <v-list-tile-content >
+                            <v-list-tile-title>I am teacher</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>class</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                    <v-list-tile @click="">
+                        <v-list-tile-content>
+                            <v-list-tile-title>My Profile</v-list-tile-title>
+                        </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>account_circle</v-icon>
+                        </v-list-tile-action>
+                    </v-list-tile>
                     <v-list-tile @click="handleLogout">
                         <v-list-tile-content>
                             <v-list-tile-title>Logout</v-list-tile-title>
@@ -64,7 +80,16 @@
                     </v-list-tile>
                 </template>
             </v-list>
+
         </v-navigation-drawer>
+        <!--<v-snackbar-->
+                <!--:timeout="snackbar.timeout"-->
+                <!--:top="snackbar.y === 'top'"-->
+                <!--v-model="snackbar.state"-->
+                <!--:color="snackbar.color"-->
+        <!--&gt;      {{ snackbar.text }}-->
+            <!--<v-btn flat dark color="white" @click.native="snackbar.state = false">Close</v-btn>-->
+        <!--</v-snackbar>-->
     </div>
 </template>
 
@@ -91,9 +116,21 @@
                 this.displayItems(val);
             }
         },
+        computed: {
+            isNotATeacher(){
+                let user = this.$store.state.auth.user;
+                if(user && user.profile.classEngaged){
+                    this.snackbar.state = true;
+                }
+                return user && !user.profile.classEngaged;
+            }
+        },
         methods: {
             handleLogout(){
                 this.$store.dispatch('logout');
+            },
+            becomeATeacher(){
+                this.$store.dispatch('becomeATeacher');
             },
             countIndexLenghth(val){
                 return val.length - 1;
@@ -116,6 +153,13 @@
         data() {
             return {
                 drawer: false,
+                snackbar: {
+                    state: false,
+                    color: 'green',
+                    timeoute: 3000,
+                    y: 'top',
+                    text: 'You are a teacher now'
+                },
                 users: [],
                 items: [
                 ]

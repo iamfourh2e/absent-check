@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor'
 import {Accounts} from 'meteor/accounts-base'
+
 const authModule = {
     state: {
         user: null,
@@ -16,7 +17,7 @@ const authModule = {
         IS_ERROR_USER_LOGIN(state, value) {
             state.errorLogin = value;
         },
-        
+
     },
     actions: {
         submitRegisterForm({commit, state}, formData) {
@@ -29,6 +30,15 @@ const authModule = {
 
             })
         },
+        becomeATeacher() {
+            let user = Meteor.users.findOne({});
+            Meteor.call("user_updateUser", {$set: {'profile.classEngaged': !user.profile.classEngaged}}, (err, result) => {
+                if(!err) {
+                    this.commit('UPDATE_USER');
+                }
+
+            });
+        },
         subscribeUser() {
 
         },
@@ -36,8 +46,8 @@ const authModule = {
             Meteor.loginWithPassword(formData.username, formData.password, error => {
                 if (!error) {
                     this.commit('UPDATE_USER');
-                }else{
-                   this.commit('IS_ERROR_USER_LOGIN', error)
+                } else {
+                    this.commit('IS_ERROR_USER_LOGIN', error)
                 }
             })
         },

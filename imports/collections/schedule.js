@@ -14,6 +14,9 @@ const  Schedule_schema = new SimpleSchema({
     },
     holidays: {
         type: [String]
+    },
+    userId: {
+        type: String
     }
 });
 Schedule.attachSchema(Schedule_schema);

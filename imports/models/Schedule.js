@@ -1,5 +1,14 @@
 import {Schedule} from '../collections/schedule';
-class ScheduleModel { 
+class ScheduleModel {
+    insertDefault(user){
+        return Schedule.insert({
+            dayOffStart: null,
+            dayOffEnd: null,
+            exceptionDays: [],
+            holidays:[],
+            userId: user._id
+        });
+    }
     update(querySelector, selector){
         Schedule.update(querySelector, selector)
     }

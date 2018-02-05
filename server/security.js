@@ -3,5 +3,5 @@ import {Class} from '../imports/collections/class';
 
 Security.permit(['insert', 'update', 'remove']).collections([
     Schedule,
-    Class
+    Class,
 ]);
