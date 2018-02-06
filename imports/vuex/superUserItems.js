@@ -15,7 +15,14 @@ export const superUserItems =   [{
     },
     {
         icon: "add",
-        text: "Create new label"
+        text: "Student",
+        link: ':userId/student'
+    },
+    {
+        icon: "add",
+        text: "Teacher",
+        link: '/teacher',
+        prefix: '/user/'
     },
     {
         divider: true

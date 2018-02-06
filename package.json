@@ -9,6 +9,7 @@
     "date-fns": "^1.29.0",
     "google-maps": "^3.2.1",
     "meteor-node-stubs": "^0.3.2",
+    "numeral": "^2.0.6",
     "store": "^2.0.12",
     "vue": "^2.5.13",
     "vue-meteor-tracker": "^1.2.3",

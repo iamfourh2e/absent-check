@@ -4,7 +4,10 @@ class KlassModel {
         return Class.insert(doc)
     }
     fetch(selector){
-        return Class.find(selector).fetch();
+        return Class.aggregate([{$match: selector}]);
+    }
+    findDoc(seletor){
+        return Class.findOne(seletor);
     }
     upsert(querySelector,selector){
         return Class.update(querySelector,selector,{upsert: true});

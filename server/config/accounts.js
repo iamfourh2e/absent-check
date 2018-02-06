@@ -7,6 +7,7 @@ Accounts.onCreateUser((options,user) => {
         user.roles = ['h2e'];
         user.profile.studentEngaged = true;
         user.profile.classEngaged = true;
+        user.profile.classArr = [];
         user.profile.memberLevel = 3;
         Roles.addUsersToRoles(user._id, ['h2e']);
     } else {
@@ -14,6 +15,7 @@ Accounts.onCreateUser((options,user) => {
         user.profile.studentEngaged = true;
         user.profile.classEngaged = false;
         user.profile.memberLevel = 1;
+        user.profile.classArr = [];
         user.roles = ['student'];
         Roles.addUsersToRoles(user._id, ['student']);
     }

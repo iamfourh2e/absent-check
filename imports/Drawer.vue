@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-navigation-drawer fixed :clipped="$vuetify.breakpoint.width > 1264" v-model="drawer" class="grey lighten-4" app>
-            <v-list>
+            <v-list v-show="showItems">
                 <v-list-group v-for="user in users"  v-bind:key="user._id" style="padding: 10px 10px 10px 0px;">
                     <v-list-tile slot="item">
                         <v-list-tile-avatar avatar>
@@ -41,7 +41,7 @@
                     </v-list-tile>
                 </v-list-group>
             </v-list>
-            <v-list dense class="grey lighten-4">
+            <v-list dense class="grey lighten-4" v-show="showItems">
                 <template v-for="(item, i) in items">
                     <v-layout
                             row
@@ -54,9 +54,9 @@
                                 {{ item.heading }}
                             </v-subheader>
                         </v-flex>
-                        <v-flex xs6 class="text-xs-right">
+                        <!-- <v-flex xs6 class="text-xs-right">
                             <v-btn small flat>edit</v-btn>
-                        </v-flex>
+                        </v-flex> -->
                     </v-layout>
                     <v-divider
                             dark
@@ -113,10 +113,14 @@
                 }
             },
             showItems(val){
+                console.log(val)
                 this.displayItems(val);
             }
         },
         computed: {
+            items(){
+                return this.$store.state.auth.items;
+            },
             isNotATeacher(){
                 let user = this.$store.state.auth.user;
                 if(user && user.profile.classEngaged){
@@ -137,16 +141,16 @@
             },
             displayItems(val){
                  if(!val){
-                    this.items = [];
                     this.users = [];
                 }else{
-                    this.items = this.$store.state.drawer.items;
                     this.users = this.$store.state.auth.users;
                 }
             },
             toggleAction(item) {
+                let user = this.$store.state.auth.user;
+                let prefix = item.prefix ? `${item.prefix}${user.tag}` : ''
                 item.link ? this.$router.push({
-                    path: item.link
+                    path: `${prefix}${item.link}`
                 }) : "";
             }
         },
@@ -161,8 +165,6 @@
                     text: 'You are a teacher now'
                 },
                 users: [],
-                items: [
-                ]
             };
         }
     };

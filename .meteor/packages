@@ -25,3 +25,5 @@ aldeed:simple-schema
 alanning:roles
 ongoworks:security
 aldeed:collection2
+meteorhacks:aggregate
+matb33:collection-hooks

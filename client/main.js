@@ -7,6 +7,7 @@ import Vuetify  from 'vuetify/dist/vuetify.min.js'
 import GoogleMapsLoader from 'google-maps';
 GoogleMapsLoader.KEY = 'AIzaSyDOld0lTG5Ku15U-p-kyhohZXmZra2rG1k';
 Vue.prototype.$_GoogleMapsLoader = GoogleMapsLoader;
+
 //import page layout
 import AppLayout from '../imports/AppLayout.vue';
 //import store

@@ -1,32 +1,90 @@
 <template>
-  <v-layout justify-center mt-5>
-    <v-flex xs8>
-      <v-card>
-        <v-card-title>Camera</v-card-title>
-        <v-card-text>
-          <div id="video"></div>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn flat>Check mine</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+    <v-layout justify-left mt-1>
+        <v-flex xs12>
+            <v-subheader>Teacher</v-subheader>
+            <v-flex xs2>
+                <v-card>
+                    <v-card-media
+                            src="/static/doc-images/cards/sunshine.jpg"
+                            height="100px"
+                    >
+                    </v-card-media>
+                    <v-card-title primary-title>
+                        <div>
+                            <div class="headline">Top western road trips</div>
+                            <span class="grey--text">1,000 miles of wonder</span>
+                        </div>
+                    </v-card-title>
+                    <v-card-actions>
+                        <v-btn flat>Share</v-btn>
+                        <v-btn flat color="purple">Explore</v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn icon @click.native="show = !show">
+                            <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                        <v-card-text v-show="show">
+                            I'm a thing. But, like most politicians, he promised more than he could deliver. You won't
+                            have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go
+                            with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do
+                            his laundry? I've got to find a way to escape.
+                        </v-card-text>
+                    </v-slide-y-transition>
+                </v-card>
+            </v-flex>
+            <v-flex xs12>
+                <v-subheader>Student</v-subheader>
+                <v-flex xs2>
+                    <v-card>
+                        <v-card-media
+                                src="/static/doc-images/cards/sunshine.jpg"
+                                height="100px"
+                        >
+                        </v-card-media>
+                        <v-card-title primary-title>
+                            <div>
+                                <div class="headline">Top western road trips</div>
+                                <span class="grey--text">1,000 miles of wonder</span>
+                            </div>
+                        </v-card-title>
+                        <v-card-actions>
+                            <v-btn flat>Share</v-btn>
+                            <v-btn flat color="purple">Explore</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn icon @click.native="show = !show">
+                                <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                            </v-btn>
+                        </v-card-actions>
+                        <v-slide-y-transition>
+                            <v-card-text v-show="show">
+                                I'm a thing. But, like most politicians, he promised more than he could deliver. You
+                                won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then
+                                we'll go with that data file! Hey, you add a one and two zeros to that or we walk!
+                                You're going to do his laundry? I've got to find a way to escape.
+                            </v-card-text>
+                        </v-slide-y-transition>
+                    </v-card>
+                </v-flex>
+            </v-flex>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
-  export default {
-    mounted() {
+    export default {
+        mounted() {
+        },
+        data() {
+            return {
+                photo: null,
+                show: false
 
-    },
-    data() {
-      return {
-        photo: null
-      };
-    },
-    methods: {
-      take_photo() {
-      }
-    }
-  };
+            };
+        },
+        methods: {
+            take_photo() {
+            }
+        }
+    };
 </script>

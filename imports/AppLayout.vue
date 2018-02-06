@@ -5,11 +5,9 @@
             <v-toolbar-side-icon v-if="true" @click="drawer = !drawer"></v-toolbar-side-icon>
             <a @click="goHome" style="color: black;"><span class="title">H2E&nbsp;<span class="text">ABSENT CHECK</span></span></a>
         </v-toolbar>
-
         <v-content>
             <v-container fluid fill-height class="grey lighten-4">
-
-                <v-layout>
+                <v-layout justify-center align-center>
                     <transition name="component-transition" mode="out-in">
 
                         {{user}}
@@ -23,12 +21,9 @@
                             <router-view></router-view>
                         </slot>
                     </transition>
-
                 </v-layout>
-
             </v-container>
         </v-content>
-
     </v-app>
 </template>
 

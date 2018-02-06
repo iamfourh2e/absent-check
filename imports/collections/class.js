@@ -6,6 +6,13 @@ const Class_schema = new SimpleSchema({
         index: true,
         unique: true
     },
+    studentCount: {
+        type: Number,
+        optional: true
+    },
+    userId: {
+      type: String
+    },
     lat: {
         type: Number,
         optional: true,
