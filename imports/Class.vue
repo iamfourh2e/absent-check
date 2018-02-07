@@ -67,14 +67,15 @@
                 </v-flex>
             </v-layout>
             <v-layout row wrap>
-                <v-flex xs2 v-for="item in items" :key="item._id" class="m3" @click="showClass(item)">
+                <v-flex xs2 v-for="item in items" :key="item._id" class="m3">
                     <v-card :ripple="true" class="cursor-pointer">
                         <v-card-media
                                 src="img/linus-torvald.jpeg"
                                 height="100px"
+                                @click="showClass(item)"
                         >
                         </v-card-media>
-                        <v-card-title primary-title>
+                        <v-card-title primary-title @click="showClass(item)">
                             <div>
                                 <div class="headline">{{item.name}}</div>
                                 <span class="grey--text">{{formatNum(item.studentCount)}}</span>
